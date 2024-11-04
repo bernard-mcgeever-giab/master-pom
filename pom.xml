@@ -1,0 +1,135 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.give-it-a-bash</groupId>
+  <artifactId>master-pom</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <spring.boot.version>3.2.0</spring.boot.version>
+    <checkstyle.plugin.version>3.6.0</checkstyle.plugin.version>
+    <pmd.plugin.version>3.26.0</pmd.plugin.version>
+    <spotbugs.plugin.version>4.8.6.6-SNAPSHOT</spotbugs.plugin.version>
+  </properties>
+
+<!--  <modules>-->
+<!--    <module>../application-programming-interface</module>-->
+<!--    &lt;!&ndash; Add other modules as needed &ndash;&gt;-->
+<!--  </modules>-->
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring.boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- Checkstyle Configuration -->
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${maven-checkstyle-plugin.version}</version>
+          <configuration>
+            <configLocation>checkstyle.xml</configLocation>
+          </configuration>
+          <executions>
+            <execution>
+              <id>verify</id>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <phase>verify</phase>
+              <configuration>
+                <consoleOutput>true</consoleOutput>
+                <failsOnError>true</failsOnError>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- PMD Configuration -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-pmd-plugin</artifactId>
+          <version>${pmd.plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <configuration>
+                <failOnViolation>true</failOnViolation>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- SpotBugs Configuration -->
+        <plugin>
+          <groupId>com.github.spotbugs</groupId>
+          <artifactId>spotbugs-maven-plugin</artifactId>
+          <version>${spotbugs.plugin.version}</version>
+          <configuration>
+            <effort>Max</effort>
+            <threshold>Low</threshold>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <configuration>
+                <failOnViolation>true</failOnViolation>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- Spring Boot Maven Plugin -->
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-checkstyle-plugin</artifactId>
+      <version>${checkstyle.plugin.version}</version>
+      <configuration>
+        <configLocation>../master-pom/checkstyle.xml</configLocation>
+      </configuration>
+      <executions>
+        <execution>
+          <goals>
+            <goal>check</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+    </plugins>
+  </build>
+<!--  <reporting>-->
+<!--    <plugins>-->
+<!--      <plugin>-->
+<!--        <groupId>org.apache.maven.plugins</groupId>-->
+<!--        <artifactId>maven-checkstyle-plugin</artifactId>-->
+<!--        <version>${checkstyle.plugin.version}</version>-->
+<!--      </plugin>-->
+<!--    </plugins>-->
+<!--  </reporting>-->
+</project>
